@@ -1,0 +1,16 @@
+{
+    "name": "OasisKernelToken",
+    "version": "0.0.2",
+    "author": "vvision",
+    "description": "A simple way to get a valid token automatically from Oasis kernel.",
+    "license": "GNU GPL3",
+    "engine": {
+        "node": "&gt;=0.10"
+    },
+    "scripts": {
+        "start": "node ./token.js"
+    },
+    "dependencies": {
+        "request": ""
+    }
+}
