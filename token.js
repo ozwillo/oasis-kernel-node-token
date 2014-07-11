@@ -34,23 +34,23 @@ request(getRequestBin, function(err, res, body) {
 var login = function(requestBinId, callback) {
   //If you want to use authUrl directly, you'd better comment 
   //getCodeFromKernel(binId, function(code) { }); above.
-  var authUrl = 'https://oasis-demo.atolcd.com/a/auth?response_type=code'
+  var authUrl = conf.kernelBaseUrl + '/a/auth?response_type=code'
     + '&client_id=' + conf.client_id
     + '&scope=openid%20datacore%20profile%20email'
     + '&redirect_uri=http://requestb.in/' + requestBinId;
 
   var options = {
-    url: 'https://oasis-demo.atolcd.com/a/login',
+    url: conf.kernelBaseUrl + '/a/login',
     method: 'POST',
     followAllRedirects: true,
     headers: {
-      referer: 'https://oasis-demo.atolcd.com/a/login'
+      referer: conf.kernelBaseUrl + '/a/login'
     },
     form: {
       u: conf.login,
       pwd: conf.password,
       _utf8: '☃',
-      'continue': 'https://oasis-demo.atolcd.com/',
+      'continue': conf.kernelBaseUrl,
       //'continue': authUrl
     }
   };
@@ -58,6 +58,7 @@ var login = function(requestBinId, callback) {
     if(err) {
       console.log(err);
     }
+    //console.log(body);
     callback(requestBinId);
   });
 };
@@ -65,7 +66,7 @@ var login = function(requestBinId, callback) {
 
 var getCodeFromKernel = function(requestBinId, callback) {
   var options = {
-    url: 'https://oasis-demo.atolcd.com/a/auth',
+    url: conf.kernelBaseUrl + '/a/auth',
     method: 'POST',
     followAllRedirects: true,
     form: {
@@ -81,6 +82,7 @@ var getCodeFromKernel = function(requestBinId, callback) {
     if(err) {
       console.log(err);
     }
+    //console.log(body);
     callback(requestBinId);
   });
 };
@@ -97,7 +99,7 @@ var getCodeFromBin = function(requestBinId, callback) {
     if(err) {
       console.log(err);
     }
-
+    //console.log(body);
     var code = regCode.exec(body);
     if(code) {
       //console.log(code[1]);
@@ -112,7 +114,7 @@ var getCodeFromBin = function(requestBinId, callback) {
 var getToken = function(requestBinId, code, callback) {
   var auth = 'Basic ' + new Buffer(conf.client_id + ':' + conf.client_secret).toString("base64");
   var options = {
-    url: 'https://oasis-demo.atolcd.com/a/token',
+    url: conf.kernelBaseUrl + '/a/token',
     method: 'POST',
     headers: {
       'Authorization': auth
@@ -128,6 +130,7 @@ var getToken = function(requestBinId, code, callback) {
     if(err) {
       console.log(err);
     }
+    console.log(body);
     //console.log(JSON.parse(body).id_token);
     callback(JSON.parse(body).access_token);
   });
@@ -135,7 +138,7 @@ var getToken = function(requestBinId, code, callback) {
 
 var testToken = function(token, callback) {
   var options = {
-    url: 'https://oasis-demo.atolcd.com:443/a/userinfo',
+    url: conf.kernelBaseUrl + '/a/userinfo',
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + token,
