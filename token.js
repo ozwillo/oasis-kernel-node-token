@@ -40,6 +40,7 @@ var login = function(requestBinId, callback) {
     + '&redirect_uri=http://requestb.in/' + requestBinId;
 
   var options = {
+    rejectUnauthorized: false,
     url: conf.kernelBaseUrl + '/a/login',
     method: 'POST',
     followAllRedirects: true,
@@ -66,6 +67,7 @@ var login = function(requestBinId, callback) {
 
 var getCodeFromKernel = function(requestBinId, callback) {
   var options = {
+    rejectUnauthorized: false,
     url: conf.kernelBaseUrl + '/a/auth',
     method: 'POST',
     followAllRedirects: true,
@@ -114,6 +116,7 @@ var getCodeFromBin = function(requestBinId, callback) {
 var getToken = function(requestBinId, code, callback) {
   var auth = 'Basic ' + new Buffer(conf.client_id + ':' + conf.client_secret).toString("base64");
   var options = {
+    rejectUnauthorized: false,
     url: conf.kernelBaseUrl + '/a/token',
     method: 'POST',
     headers: {
@@ -138,6 +141,7 @@ var getToken = function(requestBinId, code, callback) {
 
 var testToken = function(token, callback) {
   var options = {
+    rejectUnauthorized: false,
     url: conf.kernelBaseUrl + '/a/userinfo',
     method: 'POST',
     headers: {
