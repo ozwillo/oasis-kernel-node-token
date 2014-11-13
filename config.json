@@ -1,0 +1,11 @@
+{
+    "login": "TODO user email",
+    "password": "TODO",
+    "app_client_id": "TODO",
+    "app_client_secret": "TODO",
+    "dc_client_id": "dc",
+    "dc_client_secret": "TODO",
+    "kernelBaseUrl": "TODO accounts URL",
+    "redirect_uri" : "TODO ex. http://localhost:8080/dc/playground/token",
+    "datacoreTestUrl": "TODO ex. https://localhost:8080/dc/type/pli:city_0"
+}
